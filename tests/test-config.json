@@ -1,0 +1,11 @@
+{
+    "chromium-browser": "chrome",
+    "firefox": "firefox",
+    "x-terminal-emulator": "terminal",
+    "thunderbird": "envelope",
+    "jetbrains-idea-ce": "edit",
+    "nautilus": "folder-open",
+    "clementine": "music",
+    "vlc": "play",
+    "signal": "comment"
+}

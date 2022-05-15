@@ -9,7 +9,7 @@ def test_main(monkeypatch):
         MockWorkspace(1, MockLeaf("firefox")),
         MockWorkspace(2, MockLeaf("chromium-browser")),
     ))
-    main([])
+    main(['-c', 'tests/test-config.json'])
 
 
 def test_verbose_startup(monkeypatch, capsys):
@@ -17,7 +17,7 @@ def test_verbose_startup(monkeypatch, capsys):
         MockWorkspace(1, MockLeaf("firefox")),
         MockWorkspace(2, MockLeaf("chromium-browser")),
     ))
-    main(['-v'])
+    main(['-v', '-c', 'tests/test-config.json'])
     cap = capsys.readouterr()
     assert '-> name: firefox' in cap.out
     assert 'rename workspace "" to "1: "' in cap.out

@@ -32,9 +32,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --cov=. --cov-report=xml
+        pytest --cov=.
 
-    - name: CodeCov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.xml
+    # - name: CodeCov
+    #   uses: codecov/codecov-action@v1
+    #   with:
+    #     file: ./coverage.xml

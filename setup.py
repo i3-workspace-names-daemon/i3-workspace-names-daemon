@@ -16,7 +16,7 @@ setup(
     zip_safe=False,
     py_modules=['i3_workspace_names_daemon', 'fa_icons'],
     install_requires=["i3ipc"],
-    extras_require={'testing': ['pytest', 'pytest-cov', 'pytest-randomly']},
+    extras_require={'testing': ['flake8', 'pytest', 'pytest-cov', 'pytest-randomly']},
     author='Chris Boddy',
     author_email='chris@boddy.im',
     classifiers=[

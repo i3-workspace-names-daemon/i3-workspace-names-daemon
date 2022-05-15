@@ -1,63 +1,7 @@
 import unittest
+from mocks import AttrDict, MockLeaf, MockWorkspace, MockTree, MockI3
 
 from i3_workspace_names_daemon import build_rename
-
-
-class AttrDict(dict):
-    def __init__(self, *args, **kwargs):
-        super(AttrDict, self).__init__(*args, **kwargs)
-        self.__dict__ = self
-
-
-class MockLeaf:
-    def __init__(self, name, title=None, instance=None, wc=None):
-        self.name = name
-        if title is not None:
-            self.window_title = title
-        else:
-            self.window_title = name
-        if instance is not None:
-            self.window_instance = instance
-        else:
-            self.window_instance = name
-        if wc is not None:
-            self.window_class = wc
-        else:
-            self.window_class = name
-
-
-class MockWorkspace:
-    def __init__(self, num, *leaves):
-        self.num = num
-        self.leaves_ = leaves
-        self.visible = True
-        self.focused = True
-        self.name = ""
-
-    def leaves(self):
-        return self.leaves_
-
-
-class MockTree:
-    def __init__(self, mi3):
-        self.mi3 = mi3
-
-    def workspaces(self):
-        return self.mi3.workspaces
-
-
-class MockI3:
-    def __init__(self, *workspaces):
-        self.workspaces = workspaces
-
-    def get_tree(self):
-        return MockTree(self)
-
-    def get_workspaces(self):
-        return self.workspaces
-
-    def command(self, cmd):
-        self.cmd = cmd
 
 
 def base_config():
@@ -67,7 +11,7 @@ def base_config():
         "uniq": False,
         "ignore_unknown": False,
         "no_match_not_show_name": False,
-        "verbose": False,
+        "verbose": True,
     }
 
 
@@ -91,15 +35,16 @@ class TestRename(unittest.TestCase):
         mi3 = MockI3(
             MockWorkspace(1, MockLeaf("firefox")),
             MockWorkspace(2, MockLeaf("chromium-browser")),
+            MockWorkspace(3, MockLeaf(None, "myprogram")),
         )
 
         rename = build_rename(mi3, mappings, args)
         rename(mi3, None)
 
-        expected = ["1: \uf269", "2: \uf268"]
+        expected = ["1: \uf269", "2: \uf268", "3: ?"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
-
+        
     def test_two_apps_one_ws(self):
         mappings = base_mappings()
         args = AttrDict(base_config())
@@ -315,6 +260,42 @@ class TestRename(unittest.TestCase):
         expected = ["1: \uf04bbar"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
+
+    def test_transform_title_icon_unmatched(self):
+        mappings = base_mappings()
+        mappings["emacs"] = {
+            "transform_title": {"from": r"asdasdasd", "to": r"",},
+            "icon": "play",
+        }
+
+        args = AttrDict(base_config())
+
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
+
+        rename = build_rename(mi3, mappings, args)
+        rename(mi3, None)
+
+        expected = ["1: \uf04b"]
+        actual = get_names(mi3.cmd)
+        self.assertListEqual(expected, actual)
+
+    def test_dict_not_transform(self):
+        mappings = base_mappings()
+        mappings["emacs"] = {
+            "icon": "play",
+        }
+
+        args = AttrDict(base_config())
+
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
+
+        rename = build_rename(mi3, mappings, args)
+        rename(mi3, None)
+
+        expected = ["1: \uf04b"]
+        actual = get_names(mi3.cmd)
+        self.assertListEqual(expected, actual)
+
 
     def test_transform_title_replace_all(self):
         mappings = base_mappings()

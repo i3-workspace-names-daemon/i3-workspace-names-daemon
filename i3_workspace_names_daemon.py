@@ -6,6 +6,7 @@ import os.path
 import argparse
 import re
 import i3ipc
+from sys import stderr, argv
 from fa_icons import icons as fa_icons
 
 I3_CONFIG_PATHS = tuple(
@@ -100,9 +101,6 @@ def build_rename(i3, mappings, args):
         if icon:
             return icon
 
-        # nothing matched
-        return None
-
     def resolve_icon_or_mapping(name, leaf):
         for name_re in mappings.keys():
             if re.match(name_re, name, re.IGNORECASE):
@@ -154,7 +152,7 @@ def build_rename(i3, mappings, args):
                 return fa_icons[mappings["_no_match"]]
             return "?"
 
-    def rename(i3, e):
+    def rename(i3, _):
         workspaces = i3.get_tree().workspaces()
         # need to use get_workspaces since the i3 con object doesn't have the visible property for some reason
         workdicts = i3.get_workspaces()
@@ -349,7 +347,7 @@ def _validate_config(config):
     return err
 
 
-def main():
+def main(argv):  # pylint: disable=redefined-outer-name
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument(
         "-config-path",
@@ -403,12 +401,12 @@ def main():
         required=False,
         default=False,
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     mappings = _get_mapping(args.config_path)
 
-    if _validate_config(mappings):
-        print("Errors in configuration found!")
+    if _validate_config(mappings):  # pragma: no cover
+        print("Errors in configuration found!", file=stderr)
 
     # build i3-connection
     i3 = i3ipc.Connection()
@@ -416,10 +414,10 @@ def main():
         _verbose_startup(i3)
 
     rename = build_rename(i3, mappings, args)
-    for case in ["window::move", "window::new", "window::title", "window::close"]:
-        i3.on(case, rename)
+    for _case in ["window::move", "window::new", "window::title", "window::close"]:
+        i3.on(_case, rename)
     i3.main()
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__":  # pragma: no cover
+    main(argv[1:])

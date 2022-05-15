@@ -175,7 +175,10 @@ def build_rename(i3, mappings, args):
             names = [x for x in names if x]
             names = delim.join(names)
             if int(workspace.num) >= 0:
-                newname = u"{}: {}".format(workspace.num, names)
+                if names:
+                    newname = u"{}: {}".format(workspace.num, names)
+                else:
+                    newname = str(workspace.num)
             else:
                 newname = names
 

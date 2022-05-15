@@ -249,7 +249,7 @@ class TestRename(unittest.TestCase):
         rename = build_rename(mi3, mappings, args)
         rename(mi3, None)
 
-        expected = ["1: "]
+        expected = ["1"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
 
@@ -263,7 +263,7 @@ class TestRename(unittest.TestCase):
         rename = build_rename(mi3, mappings, args)
         rename(mi3, None)
 
-        expected = ["1: "]
+        expected = ["1"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
 
@@ -277,7 +277,7 @@ class TestRename(unittest.TestCase):
         rename = build_rename(mi3, mappings, args)
         rename(mi3, None)
 
-        expected = ["1: "]
+        expected = ["1"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
 

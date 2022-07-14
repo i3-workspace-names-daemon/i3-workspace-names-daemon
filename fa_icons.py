@@ -1,4 +1,5 @@
 # font-awesome icon-name to unicode mapping
+
 icons = {
     "0": u"\u0030",
     "1": u"\u0031",

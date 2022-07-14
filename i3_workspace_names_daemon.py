@@ -347,7 +347,21 @@ def _validate_config(config):
     return err
 
 
-def main(argv):  # pylint: disable=redefined-outer-name
+def generate_icons(icons_json_path: str):
+    # icons.json is located in the metadata directory of a kit https://fontawesome.com/download
+    with open(icons_json_path, "r", encoding='utf-8') as _file:
+        data = json.load(_file)
+
+    with open("fa_icons.py", "w", encoding='ascii') as _file:
+        _file.write("# font-awesome icon-name to unicode mapping\n\n")
+        _file.write("icons = {\n")
+        for name, prop in data.items():
+            if prop["free"]:
+                _file.write(f'    "{name}": u"\\u{prop["unicode"].zfill(4)}",\n')
+        _file.write('}\n')
+
+
+def main(argv) -> int:  # pylint: disable=redefined-outer-name
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument(
         "-config-path",
@@ -401,7 +415,19 @@ def main(argv):  # pylint: disable=redefined-outer-name
         required=False,
         default=False,
     )
+    parser.add_argument(
+        "-g",
+        "--generate-icons",
+        help=("Instead of running the daeamon, generates fa_icon.py file. "
+              "This is intented for usage with newer versions of fontawesome. "
+              "For the mantainers of this program"),
+        required=False,
+    )
     args = parser.parse_args(argv)
+
+    if args.generate_icons:
+        generate_icons(args.generate_icons)
+        return 0
 
     mappings = _get_mapping(args.config_path)
 
@@ -417,6 +443,7 @@ def main(argv):  # pylint: disable=redefined-outer-name
     for _case in ["window::move", "window::new", "window::title", "window::close"]:
         i3.on(_case, rename)
     i3.main()
+    return 0
 
 
 if __name__ == "__main__":  # pragma: no cover

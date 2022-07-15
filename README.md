@@ -14,17 +14,40 @@ update i3-bar workspace names to look something like this
 
 ### install
 
-Install the [package](https://pypi.org/project/i3-workspace-names-daemon/) from pypi with [pip](https://pypi.org/project/pip/).
+#### Archlinux
 
-```
-sudo pip3 install i3-workspace-names-daemon
+There is this [AUR package](https://aur.archlinux.org/packages/i3-workspace-names-daemon-git)
+PKGBUILD is [here](https://github.com/i3-workspace-names-daemon/AUR)
+
+#### Debian & others
+
+- Packaging contibutions are welcome
+
+Otherwise, install manually
+
+#### pip
+
+The pypi package is still pointing to a legacy (with less features but working) version.
+
+Until Chris comes back, install manually
+
+#### manual installation
+
+1. install git, python, fontawesome, python-i3ipc
+
+2. clone this repository
+```bash
+git clone https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon
+cd i3-workspace-names-daemon
 ```
 
-**NB. if you don't have sudo privileges instead do**
+3. install with pip
+```bash
+pip install --user -e .
+```
 
-```
-pip3 install --user i3-workspace-names-daemon
-```
+4. to update simply `git pull`
+
 ##### font 
 
 You can use all icon fonts available on your system thanks to pango. [More here](#more-icons-with-pango).

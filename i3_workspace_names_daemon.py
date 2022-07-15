@@ -60,6 +60,7 @@ def build_rename(i3, mappings, args):
     func
         The rename callback.
     """
+    form = args.number_separator_format
     delim = args.delimiter
     length = args.max_title_length
     uniq = args.uniq
@@ -174,7 +175,7 @@ def build_rename(i3, mappings, args):
             names = delim.join(names)
             if int(workspace.num) >= 0:
                 if names:
-                    newname = u"{}: {}".format(workspace.num, names)
+                    newname = form.format(workspace.num, names)
                 else:
                     newname = str(workspace.num)
             else:
@@ -365,8 +366,19 @@ def main(argv) -> int:  # pylint: disable=redefined-outer-name
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument(
         "-config-path",
-        help="Path to file that maps applications to icons in json format. Defaults to ~/.i3/app-icons.json or ~/.config/i3/app-icons.json or hard-coded list if they are not available.",
+        help=("Path to file that maps applications to icons in json format."
+              " Defaults to ~/.i3/app-icons.json or ~/.config/i3/app-icons.json or"
+              " hard-coded list if they are not available."),
         required=False,
+    )
+    parser.add_argument(
+        "-s",
+        "--number-separator-format",
+        help=('Format of the workspace number + names/icons.'
+              ' The first "{}" represents the workspace number placeholder and the second represents'
+              ' the names/icons placeholder.\nEx: - "{}: {}" (Default)\n - "{} - {}"\n - "{} ( {} )"'),
+        required=False,
+        default="{}: {}",
     )
     parser.add_argument(
         "-d",

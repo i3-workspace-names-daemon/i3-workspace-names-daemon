@@ -19,7 +19,7 @@ DEFAULT_APP_ICON_CONFIG = {
     "firefox": "firefox",
     "x-terminal-emulator": "terminal",
     "thunderbird": "envelope",
-    "jetbrains-idea-ce": "edit",
+    "jetbrains-idea-ce": "file-pen",
     "nautilus": "folder-open",
     "clementine": "music",
     "vlc": "play",

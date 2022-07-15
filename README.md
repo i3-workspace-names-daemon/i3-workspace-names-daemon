@@ -81,7 +81,7 @@ chris@vulcan: ~$ cat ~/.i3/app-icons.json
     "google-chrome": "chrome",
     "x-terminal-emulator": "terminal",
     "thunderbird": "envelope",
-    "jetbrains-idea-ce": "edit",
+    "jetbrains-idea-ce": "file-pen",
     "nautilus": "folder-open",
     "clementine": "music",
     "vlc": "play",
@@ -95,6 +95,8 @@ NB: to validate your config file is formatted correctly run this command and che
 ```
 python3 -m json.tool  /path/to/your/app-icons.json
 ```
+
+NB: to further validate the icon names are all existing you can try run the daemon manually
 
 where the key is the name of the i3-window (ie. what is shown in the i3-bar when it is not configured yet) and  the value is the font-awesome icon name you want to show instead, see [picking icons](#picking-icons).
 

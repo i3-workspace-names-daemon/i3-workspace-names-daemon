@@ -30,7 +30,7 @@ class TestValidateConfig(unittest.TestCase):
         self.assertFalse(err)
 
     def test_icon_mapping_explicit(self):
-        config = {"app2": {"icon": "edit"}}
+        config = {"app2": {"icon": "file-pen"}}
         err = _validate_config(config)
         self.assertFalse(err)
 
@@ -40,7 +40,7 @@ class TestValidateConfig(unittest.TestCase):
         self.assertTrue(err)
 
     def test_mapping_ignore_extra_attributes(self):
-        config = {"app2": {"icon": "edit", "abc": "def", "123": "098"}}
+        config = {"app2": {"icon": "file-pen", "abc": "def", "123": "098"}}
         err = _validate_config(config)
         self.assertFalse(err)
 

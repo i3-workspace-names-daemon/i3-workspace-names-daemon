@@ -300,20 +300,23 @@ def _validate_dict_mapping(app, mapping):
                 print(
                     "Title transform mapping for app '{}' contains invalid regular expression in 'from' attribute!".format(
                         app
-                    )
+                    ),
+                    file=stderr,
                 )
         else:
             err = True
             print(
                 "Title transform mapping for app '{}' requires a 'from' key!".format(
                     app
-                )
+                ),
+                file=stderr,
             )
 
         if not tt.get("to", None):
             err = True
             print(
-                "Title transform mapping for app '{}' requires a 'to' key!".format(app)
+                "Title transform mapping for app '{}' requires a 'to' key!".format(app),
+                file=stderr,
             )
 
     return err
@@ -336,13 +339,14 @@ def _validate_config(config):
         if (
             icon_name is not None
             and not icon_name.startswith("<")
-            and not icon_name in fa_icons
+            and icon_name not in fa_icons
         ):
             err = True
             print(
                 "Specified icon '{}' for app '{}' does not exist!".format(
                     icon_name, app
-                )
+                ),
+                file=stderr,
             )
 
     return err

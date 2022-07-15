@@ -7,6 +7,7 @@ from i3_workspace_names_daemon import build_rename
 def base_config():
     return {
         "delimiter": "|",
+        "number_separator_format": "{}: {}",
         "max_title_length": 12,
         "uniq": False,
         "ignore_unknown": False,
@@ -152,7 +153,7 @@ class TestRename(unittest.TestCase):
         rename = build_rename(mi3, mappings, args)
         rename(mi3, None)
 
-        expected = ["1: \uf128giregox"]
+        expected = ["1: ?giregox"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
 
@@ -166,7 +167,7 @@ class TestRename(unittest.TestCase):
         rename = build_rename(mi3, mappings, args)
         rename(mi3, None)
 
-        expected = ["1: \uf128giregox-gire…"]
+        expected = ["1: ?giregox-gire…"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
 
@@ -180,7 +181,7 @@ class TestRename(unittest.TestCase):
         rename = build_rename(mi3, mappings, args)
         rename(mi3, None)
 
-        expected = ["1: \uf128"]
+        expected = ["1: ?"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
 

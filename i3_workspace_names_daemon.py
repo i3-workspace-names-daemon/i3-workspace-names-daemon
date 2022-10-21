@@ -366,7 +366,7 @@ def generate_icons(icons_json_path: str):
         _file.write('}\n')
 
 
-def main(argv) -> int:  # pylint: disable=redefined-outer-name
+def main() -> int:
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument(
         "-config-path",
@@ -439,7 +439,7 @@ def main(argv) -> int:  # pylint: disable=redefined-outer-name
               "For the mantainers of this program"),
         required=False,
     )
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
 
     if args.generate_icons:
         generate_icons(args.generate_icons)
@@ -463,4 +463,4 @@ def main(argv) -> int:  # pylint: disable=redefined-outer-name
 
 
 if __name__ == "__main__":  # pragma: no cover
-    main(argv[1:])
+    main()

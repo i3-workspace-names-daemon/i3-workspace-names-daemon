@@ -60,6 +60,7 @@ For Debian/Ubuntu et al.
 ```
 sudo apt install fonts-font-awesome
 ```
+_Note that the Debian package is usually behind the current version of Font Awesome. If you want to use a more up to date version, [download the free Package](https://fontawesome.com/download) and install manually (Tutorial for Ubuntu 22.04 [here](https://linuxconfig.org/how-to-install-fonts-on-ubuntu-22-04-jammy-jellyfish-linux))._
 
 **NB: if the glyphs are not rendering make sure the font is installed.**
 

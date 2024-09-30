@@ -16,8 +16,20 @@ update i3-bar workspace names to look something like this
 
 #### Archlinux
 
-There is this [AUR package](https://aur.archlinux.org/packages/i3-workspace-names-daemon-git)
+<strike>There is this [AUR package](https://aur.archlinux.org/packages/i3-workspace-names-daemon-git)</strike> (it was deleted due to it being marked as duplicate of cboddy's original)
+
 PKGBUILD is [here](https://github.com/i3-workspace-names-daemon/AUR)
+
+#### Gentoo
+[ebuild repository](https://github.com/i3-workspace-names-daemon/gentoo) available
+
+```bash
+eselect repository add i3-workspace-names-daemon git https://github.com/i3-workspace-names-daemon/gentoo
+emerge --sync i3-workspace-names-daemon
+echo "x11-misc/i3-workspace-names-daemon **" >/etc/portage/package.accept_keywords/i3-workspace-names-daemon
+echo "dev-python/i3ipc **" >/etc/portage/package.accept_keywords/i3ipc
+emerge --ask x11-misc/i3-workspace-names-daemon
+```
 
 #### Debian & others
 

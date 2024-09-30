@@ -92,7 +92,7 @@ exec_always --no-startup-id exec i3-workspace-names-daemon
 Configure what icons to show for what application-windows in the file  ``~/.i3/app-icons.json`` or ``~/.config/i3/app-icons.json`` (in JSON format). For example:
 
 ```
-chris@vulcan: ~$ cat ~/.i3/app-icons.json
+chris@vulcan: ~$ cat ~/.config/i3/app-icons.json
 {
     "firefox": "firefox",
     "chromium-browser": "chrome",

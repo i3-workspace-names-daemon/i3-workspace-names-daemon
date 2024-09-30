@@ -1,4 +1,4 @@
-![Test Suite](https://github.com/castixgithub/i3-workspace-names-daemon/workflows/Python%20application/badge.svg)
+[![testsuite](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/actions/workflows/pythonapp.yml/badge.svg)](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/actions/workflows/pythonapp.yml)
 [![codecov.io](https://codecov.io/github/castixgithub/i3-workspace-names-daemon/coverage.svg?branch=master)](https://codecov.io/github/castixgithub/i3-workspace-names-daemon?branch=master)
 
 # i3-workspace-names-daemon

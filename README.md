@@ -12,6 +12,9 @@ update i3-bar workspace names to look something like this
 
 <img src="https://raw.githubusercontent.com/cboddy/_vim_gifs/master/i3-bar-with-icons.png"></img>
 
+> [!NOTE]
+> This is a fork, the original is [here](https://github.com/cboddy/i3-workspace-names-daemon)
+
 ### install
 
 #### Archlinux

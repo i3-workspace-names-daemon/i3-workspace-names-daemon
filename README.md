@@ -88,26 +88,6 @@ Add the following line to your ``~/.i3/config``.
 exec_always --no-startup-id exec i3-workspace-names-daemon
 ```
 
-If you use the ``$mod+1`` etc. shortcuts to switch workspaces then update the following so that the *switch to workspace* and *move focused window to workspace* **shortcuts still work**. 
-
-
-from 
-
-```
-bindsym $mod+1 workspace 1
-bindsym $mod+Shift+1 move container to workspace 1
-# etc
-```
-
-to
-
-```
-bindsym $mod+1 workspace number 1
-bindsym $mod+Shift+1 move container to workspace number 1
-# etc
-```
-
-
 ### icons config
 Configure what icons to show for what application-windows in the file  ``~/.i3/app-icons.json`` or ``~/.config/i3/app-icons.json`` (in JSON format). For example:
 

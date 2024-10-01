@@ -1,10 +1,5 @@
 name: Build Deb Pack
 
-permissions:
-  contents: write
-  metadata: read
-  packages: read
-
 on:
   push:
     tags:
@@ -13,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      metadata: read
+      packages: read
 
     steps:
       - name: Checkout Code

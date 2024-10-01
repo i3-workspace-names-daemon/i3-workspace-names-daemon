@@ -1,0 +1,18 @@
+Source: i3-workspace-names-daemon
+Section: python
+Priority: optional
+Maintainer: Floyd Otsoko <floydotsoko@gmx.net>
+Build-Depends: debhelper-compat (= 13), dh-python, python3-setuptools, python3-all
+Standards-Version: 4.6.0
+Homepage: https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon
+#Vcs-Browser: https://salsa.debian.org/debian/i3-workspace-names-daemon
+#Vcs-Git: https://salsa.debian.org/debian/i3-workspace-names-daemon.git
+Rules-Requires-Root: no
+
+Package: i3-workspace-names-daemon
+Architecture: any
+Depends: ${python3:Depends}, ${misc:Depends}, ${python3-i3ipc:Depends}, dh-python
+Suggests: fonts-font-awesome
+Description: Description: Rename i3 workspaces dynamically
+ Dynamically update the name of each i3wm workspace using font-awesome icons
+ or the names of applications running in each workspace.

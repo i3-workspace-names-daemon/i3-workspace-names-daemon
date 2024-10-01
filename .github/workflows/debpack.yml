@@ -1,0 +1,38 @@
+name: Build Deb Pack
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev devscripts debhelper-compat dh-python python3-setuptools python3-all
+
+      - name: Build Debian Package
+        run: debuild --no-tgz-check -us -uc
+
+      - name: Generate MD5 Checksum file
+        run: |
+          cd /home/runner/work/i3-workspace-names-daemon/
+          newest_deb=$(ls -t *.deb | head -n 1)
+          md5sum "$newest_deb" > "${newest_deb%.deb}.md5"
+
+      - name: Release the Package
+        uses: softprops/action-gh-release@v1
+        with:
+          name: i3-workspace-names-daemon
+          files:  |
+            /home/runner/work/i3-workspace-names-daemon/*.deb
+            /home/runner/work/i3-workspace-names-daemon/*.md5
+          token: ${{ secrets.release }}
+

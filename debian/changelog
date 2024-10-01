@@ -1,0 +1,5 @@
+i3-workspace-names-daemon (0.15.0-1) UNRELEASED; urgency=medium
+
+  * Initial release (Closes: #0006)  <nnnn is the bug number of your ITP>
+
+ -- Otsoko <55394045+FloydOtsoko@users.noreply.github.com>  Sun, 22 Oct 2023 10:55:26 +0200

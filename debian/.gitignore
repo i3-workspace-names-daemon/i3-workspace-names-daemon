@@ -1,0 +1,6 @@
+.debhelper
+README.*
+debhelper-build-stamp
+files
+i3-workspace-names-daemon*
+source

@@ -1,8 +1,9 @@
 i3-workspace-names-daemon (0.15.1) UNRELEASED; urgency=low
 
-  * Integrate debian (and gentoo) packaging
+  * Integrate debian packaging
 
- -- Castix <castix@autistici.org>  2024-10-01 22:00
+ -- Castix <castix@autistici.org>  Tue, 01 Oct 2024 21:56:07 +0200
+
 i3-workspace-names-daemon (0.15.0-1) UNRELEASED; urgency=medium
 
   * Initial release (Closes: #0006)  <nnnn is the bug number of your ITP>

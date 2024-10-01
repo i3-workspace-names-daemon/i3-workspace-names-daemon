@@ -53,7 +53,7 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -H "Content-Type: application/octet-stream" \
             "https://uploads.github.com/repos/$I3WND/$I3WND/releases/${RELEASE_ID}/assets?name=${newest_deb}" \
-            --data-binary "@${newest_deb}"
+            --data-binary "@${newest_deb}" 2>&1 >/dev/null
           # upload md5 checksum
           curl -L \
             -X POST \
@@ -62,7 +62,7 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -H "Content-Type: application/octet-stream" \
             "https://uploads.github.com/repos/$I3WND/$I3WND/releases/${RELEASE_ID}/assets?name=${newest_deb}.md5" \
-            --data-binary "@${newest_deb}.md5"
+            --data-binary "@${newest_deb}.md5" 2>&1 >/dev/null
           # a completely uploaded release is releasable
           curl -L \
             -X PATCH \
@@ -70,5 +70,5 @@ jobs:
             -H "Authorization: Bearer ${GITHUB_TOKEN}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/$I3WND/$I3WND/releases/RELEASE_ID \
-            -d '{"draft":false}'
+            -d '{"draft":false}' 2>&1 >/dev/null
 

@@ -28,11 +28,10 @@ jobs:
           md5sum "$newest_deb" > "${newest_deb%.deb}.md5"
 
       - name: Release the Package
-        uses: softprops/action-gh-release@v1
+        uses: i3-workspace-names-daemon/action-gh-release@v2
         with:
           name: i3-workspace-names-daemon
           files:  |
             /home/runner/work/i3-workspace-names-daemon/*.deb
             /home/runner/work/i3-workspace-names-daemon/*.md5
-          token: ${{ secrets.release }}
 

@@ -5,7 +5,7 @@ cd /home/runner/work/$I3WND
 newest_deb=$(ls -t *.deb | head -n 1)
 md5sum "$newest_deb" > "${newest_deb}.md5"
 
-PV=`grep -e 'version' ../setup.py | cut -d "'" -f 2`
+PV=`grep -e 'version' "$I3WND/setup.py" | cut -d "'" -f 2`
 if [ "v$PV" != $GITHUB_REF_NAME ] ; then
 echo "Version mismatch 'v$PV' != '$GITHUB_REF_NAME'";
 exit 1;

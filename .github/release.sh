@@ -15,7 +15,7 @@ fi
 RELEASE_ID=`curl -L \
     -X POST \
     -H "Accept: application/vnd.github+json" \
-    -H "Authorization: Bearer ${{GITHUB_TOKEN}}" \
+    -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/repos/$I3WND/$I3WND/releases \
     -d "{\"tag_name\":\"v${PV}\",\"target_commitish\":\"master\",\"name\":\"v${PV}\",\"body\":\"Release ${PV}\",\"draft\":true,\"prerelease\":false,\"generate_release_notes\":false}"\
@@ -33,7 +33,7 @@ fi
 curl -L \
 -X POST \
 -H "Accept: application/vnd.github+json" \
--H "Authorization: Bearer ${{GITHUB_TOKEN}}" \
+-H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
 -H "X-GitHub-Api-Version: 2022-11-28" \
 -H "Content-Type: application/octet-stream" \
 "https://uploads.github.com/repos/$I3WND/$I3WND/releases/${RELEASE_ID}/assets?name=${newest_deb}" \
@@ -43,7 +43,7 @@ curl -L \
 curl -L \
 -X POST \
 -H "Accept: application/vnd.github+json" \
--H "Authorization: Bearer ${{GITHUB_TOKEN}}" \
+-H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
 -H "X-GitHub-Api-Version: 2022-11-28" \
 -H "Content-Type: application/octet-stream" \
 "https://uploads.github.com/repos/$I3WND/$I3WND/releases/${RELEASE_ID}/assets?name=${newest_deb}.md5" \
@@ -53,7 +53,7 @@ curl -L \
 curl -L \
 -X PATCH \
 -H "Accept: application/vnd.github+json" \
--H "Authorization: Bearer ${{GITHUB_TOKEN}}" \
+-H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
 -H "X-GitHub-Api-Version: 2022-11-28" \
 https://api.github.com/repos/$I3WND/$I3WND/releases/RELEASE_ID \
 -d '{"draft":false}' 2>&1 >/dev/null

@@ -2,6 +2,8 @@ name: Build Deb Pack
 
 permissions:
   contents: write
+  metadata: read
+  packages: read
 
 on:
   push:

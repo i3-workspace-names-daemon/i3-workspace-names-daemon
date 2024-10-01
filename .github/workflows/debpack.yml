@@ -29,7 +29,7 @@ jobs:
 
       - name: Release the Package
         run: |
-          I3WND=i3-workspaces-names-daemon
+          I3WND=i3-workspace-names-daemon
           cd /home/runner/work/$I3WND
           PV=`grep -e 'version' setup.py | cut -d "'" -f 2`
           if [ "v$PV" != $GITHUB_REF_NAME ] ; then

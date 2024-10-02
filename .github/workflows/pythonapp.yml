@@ -32,12 +32,12 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        coverage run -m pytest --cov=. --cov-report=xml
+        pytest --cov=. --cov-report=xml
 
     - name: CodeCov
       uses: codecov/codecov-action@v4.0.1
       with:
-        file: ./coverage.xml
+        file: coverage.xml
         slug: i3-workspace-names-daemon/i3-workspace-names-daemon
         token: ${{ secrets.CODECOV_TOKEN }}
 

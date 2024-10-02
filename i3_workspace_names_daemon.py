@@ -9,6 +9,8 @@ import i3ipc
 from sys import stderr, argv
 from fa_icons import icons as fa_icons
 
+def _false():
+    ...
 
 I3_CONFIG_PATHS = tuple(
     os.path.expanduser(path)

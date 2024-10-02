@@ -2,3 +2,14 @@ coverage:
   range: 90..100
   precision: 2
   round: down
+  # stolen from https://github.com/twisted/klein/blob/trunk/.codecov.yml
+  # Require 1% diff coverage, only complain about project coverage.
+  status:
+    project:
+      default:
+        informational: true
+        target: 1%
+    patch:
+      default:
+        informational: false
+        target: 1%

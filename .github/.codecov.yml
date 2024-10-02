@@ -1,7 +1,4 @@
 coverage:
-  # Minimum to succeed
-  threshold: 90
-  diff:
-    # this change caused a >5% coverage change
-    threshold: 5
-    behavior: ignore
+  range: 90..100
+  precision: 2
+  round: down

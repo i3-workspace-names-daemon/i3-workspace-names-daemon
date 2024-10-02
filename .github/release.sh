@@ -20,11 +20,11 @@ RELEASE_ID=`curl -L \
     https://api.github.com/repos/$I3WND/$I3WND/releases \
     -d "{\"tag_name\":\"v${PV}\",\"target_commitish\":\"master\",\"name\":\"v${PV}\",\"body\":\"Release ${PV}\",\"draft\":true,\"prerelease\":false,\"generate_release_notes\":false}"\
     -s \
-| python -c "import json; from sys import stdin; print(json.loads(stdin.read()))"`
+| python -c "import json; from sys import stdin; print(json.loads(stdin.read())['id'])"`
 
 echo "Created Release with ID $RELEASE_ID"
 
-if [[ -z $RELEASE_ID || ${#RELEASE_ID} -gt 10 ]] ; then
+if [[ -z $RELEASE_ID || ${#RELEASE_ID} -gt 18 ]] ; then
     echo "sorry, it didn't work..."
     exit 2
 fi

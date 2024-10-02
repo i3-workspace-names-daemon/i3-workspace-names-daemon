@@ -1,0 +1,7 @@
+coverage:
+  # Minimum to succeed
+  threshold: 90
+  diff:
+    # this change caused a >5% coverage change
+    threshold: 5
+    behavior: ignore

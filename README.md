@@ -1,5 +1,6 @@
 [![testsuite](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/actions/workflows/pythonapp.yml/badge.svg)](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/actions/workflows/pythonapp.yml)
 [![codecov.io](https://codecov.io/github/castixgithub/i3-workspace-names-daemon/coverage.svg?branch=master)](https://codecov.io/github/castixgithub/i3-workspace-names-daemon?branch=master)
+[![Build Deb Pack](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/actions/workflows/debpack.yml/badge.svg)](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/actions/workflows/debpack.yml)
 
 # i3-workspace-names-daemon
 

@@ -9,7 +9,7 @@ import i3ipc
 from sys import stderr, argv
 from fa_icons import icons as fa_icons
 
-if False:
+def _false():
     ...
     # just a test
 

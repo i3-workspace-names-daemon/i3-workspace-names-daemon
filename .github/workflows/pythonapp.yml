@@ -40,3 +40,4 @@ jobs:
         file: ./coverage.xml
         slug: i3-workspace-names-daemon/i3-workspace-names-daemon
         token: ${{ secrets.CODECOV_TOKEN }}
+

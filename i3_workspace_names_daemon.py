@@ -51,7 +51,7 @@ def compress(text, length=3):
     return ret
 
 
-def build_rename(i3, mappings, args):
+def build_rename(i3, mappings, fixed_ws, args):
     """Build rename callback function to pass to i3ipc.
 
     Parameters
@@ -59,6 +59,8 @@ def build_rename(i3, mappings, args):
     i3: `i3ipc.i3ipc.Connection`
     mappings: `dict[str, Union[dict, str]]`
         Index of application-name regex (from i3) to icon-name (in font-awesome gallery).
+    fixed_ws: `dict[str, Union[dict, str]]`
+        Workspace mapping with fixed icon/title
     delim: `str`
         Delimiter to use when build workspace name from app names/icons.
 
@@ -160,38 +162,39 @@ def build_rename(i3, mappings, args):
                 return fa_icons[mappings["_no_match"]]
             return "?"
 
-    def rename(i3, _):
-        workspaces = i3.get_tree().workspaces()
-        # need to use get_workspaces since the i3 con object doesn't have the visible property for some reason
-        workdicts = i3.get_workspaces()
-        visible = [workdict.name for workdict in workdicts if workdict.visible]
-        visworkspaces = []
-        focus = (
-            [workdict.name for workdict in workdicts if workdict.focused] or [None]
-        )[0]
-        focusname = None
+    def rename_fixed(workspace):
+        newname = form.format(workspace.num,'')
+        wsc = fixed_ws[workspace.num]
+        if isinstance(wsc, str):
+            newname += get_icon(wsc)
+        else:
+            if icon_name := fixed_ws[workspace.num].get('icon'):
+                newname += get_icon(icon_name) + ' '
+            if wsname := fixed_ws[workspace.num].get('name'):
+                newname += wsname
+        return newname
 
+    def rename(i3, *_):
+        workspaces = i3.get_tree().workspaces()
         commands = []
         for workspace in workspaces:
-            names = [get_app_label(leaf, length) for leaf in workspace.leaves()]
-            if uniq:
-                seen = set()
-                names = [x for x in names if x not in seen and not seen.add(x)]
-            # filter empty names
-            names = [x for x in names if x]
-            names = delim.join(names)
-            if int(workspace.num) >= 0:
-                if names:
-                    newname = form.format(workspace.num, names)
-                else:
-                    newname = str(workspace.num)
+            if workspace.num in fixed_ws:
+                newname = rename_fixed(workspace)
             else:
-                newname = names
-
-            if workspace.name in visible:
-                visworkspaces.append(newname)
-            if workspace.name == focus:
-                focusname = newname
+                names = [get_app_label(leaf, length) for leaf in workspace.leaves()]
+                if uniq:
+                    seen = set()
+                    names = [x for x in names if x not in seen and not seen.add(x)]
+                # filter empty names
+                names = [x for x in names if x]
+                names = delim.join(names)
+                if int(workspace.num) >= 0:
+                    if names:
+                        newname = form.format(workspace.num, names)
+                    else:
+                        newname = str(workspace.num)
+                else:
+                    newname = names
 
             if workspace.name != newname:
                 commands.append(
@@ -376,6 +379,13 @@ def generate_icons(icons_json_path: str):  # pragma: no cover
 def main() -> int:
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument(
+        "--bypass-validation",
+        help="Meant for development only",
+        required=False,
+        action='store_true',
+        default=False,
+    )
+    parser.add_argument(
         "-config-path",
         help=("Path to file that maps applications to icons in json format."
               " Defaults to ~/.i3/app-icons.json or ~/.config/i3/app-icons.json or"
@@ -454,17 +464,26 @@ def main() -> int:
 
     mappings = _get_mapping(args.config_path)
 
-    if _validate_config(mappings):  # pragma: no cover
+    ws = {int(wsn): wsc for wsn, wsc in mappings.items() if wsn.isdigit()}
+    for wsn in ws.keys():
+        del mappings[str(wsn)]
+
+    if not args.bypass_validation and _validate_config(mappings):  # pragma: no cover
         print("Errors in configuration found!", file=stderr)
+        return 0
 
     # build i3-connection
     i3 = i3ipc.Connection()
     if args.verbose:
         _verbose_startup(i3)
 
-    rename = build_rename(i3, mappings, args)
-    for _case in ["window::move", "window::new", "window::title", "window::close"]:
+    rename = build_rename(i3, mappings, ws, args)
+    for _case in [
+        *[f"window::{ev}" for ev in ("move", "new", "title", "close")],
+        "workspace::init",
+    ]:
         i3.on(_case, rename)
+    rename(i3)  # call @startup
     i3.main()
     return 0
 

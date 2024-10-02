@@ -39,13 +39,13 @@ class TestRename(unittest.TestCase):
             MockWorkspace(3, MockLeaf(None, "myprogram")),
         )
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf269", "2: \uf268", "3: ?"]
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
-        
+
     def test_two_apps_one_ws(self):
         mappings = base_mappings()
         args = AttrDict(base_config())
@@ -54,7 +54,7 @@ class TestRename(unittest.TestCase):
             MockWorkspace(1, MockLeaf("firefox"), MockLeaf("chromium-browser"))
         )
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf269|\uf268"]
@@ -70,7 +70,7 @@ class TestRename(unittest.TestCase):
             MockWorkspace(1, MockLeaf("firefox"), MockLeaf("chromium-browser"))
         )
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf269 \uf268"]
@@ -83,7 +83,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("firefox"), MockLeaf("firefox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf269|\uf269"]
@@ -97,7 +97,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("firefox"), MockLeaf("firefox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf269"]
@@ -110,7 +110,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: giregox"]
@@ -123,7 +123,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox-giregox-giregox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: giregox-gire…"]
@@ -136,7 +136,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: ?"]
@@ -150,7 +150,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: ?giregox"]
@@ -164,7 +164,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox-giregox-giregox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: ?giregox-gire…"]
@@ -178,7 +178,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: ?"]
@@ -192,7 +192,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1"]
@@ -206,7 +206,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox-giregox-giregox")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1"]
@@ -220,7 +220,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1"]
@@ -237,7 +237,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: bar"]
@@ -255,7 +255,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf04bbar"]
@@ -273,7 +273,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf04b"]
@@ -290,7 +290,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf04b"]
@@ -308,7 +308,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: replaced"]
@@ -326,7 +326,7 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs", "foo [bar] baz")))
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: \uf04breplaced"]
@@ -347,7 +347,7 @@ class TestRename(unittest.TestCase):
             )
         )
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ["1: a ver-too_lo…"]
@@ -362,9 +362,69 @@ class TestRename(unittest.TestCase):
 
         mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs")),)
 
-        rename = build_rename(mi3, mappings, args)
+        rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
 
         expected = ['1: <span font_desc=\\"file-icons\\">\ue926</span>']
+        actual = get_names(mi3.cmd)
+        self.assertListEqual(expected, actual)
+
+    def test_static_names_just_icon(self):
+        mappings = base_mappings()
+        mappings['1'] = 'file-pen'
+
+        args = AttrDict(base_config())
+
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs")),)
+
+        rename = build_rename(mi3, mappings, {1: 'file-pen'}, args)
+        rename(mi3)
+
+        expected = ['1: \uf31c']
+        actual = get_names(mi3.cmd)
+        self.assertListEqual(expected, actual)
+
+    def test_static_names_just_name(self):
+        mappings = base_mappings()
+        mappings['1'] = {'name': 'editor'}
+
+        args = AttrDict(base_config())
+
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs")),)
+
+        rename = build_rename(mi3, mappings, {1: {'name': 'editor'}}, args)
+        rename(mi3)
+
+        expected = ['1: editor']
+        actual = get_names(mi3.cmd)
+        self.assertListEqual(expected, actual)
+
+    def test_static_names_icon_and_name(self):
+        mappings = base_mappings()
+        mappings['1'] = {'name': 'editor', 'icon': 'file-pen'}
+
+        args = AttrDict(base_config())
+
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs")),)
+
+        rename = build_rename(mi3, mappings, {1: {'name': 'editor', 'icon': 'file-pen'}}, args)
+        rename(mi3)
+
+        expected = ['1: \uf31c editor']
+        actual = get_names(mi3.cmd)
+        self.assertListEqual(expected, actual)
+
+    def test_static_names_empty_dict(self):
+        mappings = base_mappings()
+        mappings['1'] = {}
+
+        args = AttrDict(base_config())
+
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs")),)
+
+        rename = build_rename(mi3, mappings, {1: {}}, args)
+        rename(mi3)
+
+        expected = ['1: ']
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)

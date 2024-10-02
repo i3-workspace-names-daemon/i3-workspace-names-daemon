@@ -35,7 +35,7 @@ jobs:
         coverage run -m pytest --cov=. --cov-report=xml
 
     - name: CodeCov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4.0.1
       with:
         file: ./coverage.xml
         slug: i3-workspace-names-daemon/i3-workspace-names-daemon

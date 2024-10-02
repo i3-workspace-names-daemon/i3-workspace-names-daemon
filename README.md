@@ -236,3 +236,17 @@ Only the project name is shown as a result of the `to` property.
   "icon": "<span font_desc=\"file-icons\">\ue926</span>"
 }
 ```
+
+### Static/Fixed Workspace Name
+
+When you insert a workspace number instead of an application name,
+you can then set the icon and name
+
+example
+```json
+"1": {
+    "icon": "file-pen",
+    "title": "editor",
+},
+"2": "firefox",
+```

@@ -358,7 +358,7 @@ def _validate_config(config):
     return err
 
 
-def generate_icons(icons_json_path: str):
+def generate_icons(icons_json_path: str):  # pragma: no cover
     # icons.json is located in the metadata directory of a kit https://fontawesome.com/download
     with open(icons_json_path, "r", encoding='utf-8') as _file:
         data = json.load(_file)
@@ -447,7 +447,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    if args.generate_icons:
+    if args.generate_icons:  # pragma: no cover
         generate_icons(args.generate_icons)
         return 0
 

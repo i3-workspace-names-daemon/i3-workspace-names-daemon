@@ -376,6 +376,13 @@ def generate_icons(icons_json_path: str):  # pragma: no cover
 def main() -> int:
     parser = argparse.ArgumentParser(__doc__)
     parser.add_argument(
+        "--bypass-validation",
+        help="Meant for development only",
+        required=False,
+        action='store_true',
+        default=False,
+    )
+    parser.add_argument(
         "-config-path",
         help=("Path to file that maps applications to icons in json format."
               " Defaults to ~/.i3/app-icons.json or ~/.config/i3/app-icons.json or"
@@ -454,8 +461,9 @@ def main() -> int:
 
     mappings = _get_mapping(args.config_path)
 
-    if _validate_config(mappings):  # pragma: no cover
+    if not args.bypass_validation and _validate_config(mappings):  # pragma: no cover
         print("Errors in configuration found!", file=stderr)
+        return 0
 
     # build i3-connection
     i3 = i3ipc.Connection()

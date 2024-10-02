@@ -413,3 +413,18 @@ class TestRename(unittest.TestCase):
         expected = ['1: \uf31c editor']
         actual = get_names(mi3.cmd)
         self.assertListEqual(expected, actual)
+
+    def test_static_names_empty_dict(self):
+        mappings = base_mappings()
+        mappings['1'] = {}
+
+        args = AttrDict(base_config())
+
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("emacs")),)
+
+        rename = build_rename(mi3, mappings, {1: {}}, args)
+        rename(mi3)
+
+        expected = ['1: ']
+        actual = get_names(mi3.cmd)
+        self.assertListEqual(expected, actual)

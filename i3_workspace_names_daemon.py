@@ -18,6 +18,7 @@ I3_CONFIG_PATHS = tuple(
         "~/.config/i3-regolith",
         "~/.config/regolith2/i3",
         "~/.config/regolith3/i3",
+        "~/.config/regolith3/sway",
     )
 )
 
@@ -135,7 +136,7 @@ def build_rename(i3, mappings, fixed_ws, args):
 
     def get_app_label(leaf, length):
         # interate through all identifiers, stop when first match is found
-        for identifier in ("name", "window_title", "window_instance", "window_class"):
+        for identifier in ("name", "window_title", "window_instance", "window_class", "app_id"):
             name = getattr(leaf, identifier, None)
             if name is None:
                 continue
@@ -281,8 +282,9 @@ def _verbose_startup(i3):
 -> name: {}
 -> window_title: {}
 -> window_instance: {}
--> window_class: {}""".format(
-                    i, l.name, l.window_title, l.window_instance, l.window_class
+-> window_class: {}
+-> app_id: {}""".format(
+                    i, l.name, l.window_title, l.window_instance, l.window_class, l.app_id
                 )
             )
 

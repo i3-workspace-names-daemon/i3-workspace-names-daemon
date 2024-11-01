@@ -27,6 +27,6 @@ jobs:
 
       - name: Generate MD5 and Release the Package
         run: bash .github/release.sh
+        if: "github.repository == 'i3-workspace-names-daemon/i3-workspace-names-daemon'"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # this is moved to avoid leaking the token in the logs

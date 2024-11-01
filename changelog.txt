@@ -1,0 +1,12 @@
+Release 0.15.1-testing
+
+- improve automated debian packaging
+
+Release 0.15.1
+
+- Debian packaging thanks to @FloydOtsoko PR #12
+- Gentoo packaging
+- Readme tweaks
+- Font Awesome 6.3.0 -> 6.5.1 #15 (it's a safe append-only upgrade)
+- support regolith-3
+- github workflows fixed and now they also build a .deb package

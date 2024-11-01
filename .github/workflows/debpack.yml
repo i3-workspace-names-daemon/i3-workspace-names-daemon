@@ -31,10 +31,19 @@ jobs:
           newest_deb=$(ls -t *.deb | head -n 1)
           md5sum "$newest_deb" > "${newest_deb%.deb}.md5"
 
+      - name: Read changelog
+        run: |
+          cd /home/runner/work/i3-workspace-names-daemon/i3-workspace-names-daemon/
+          changelog=$(awk '/^Release / {if (found++) exit; print; next} found' changelog.txt)
+          echo "body<<EOF" >> $GITHUB_ENV
+          echo "$changelog" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Release the Package
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.ref_name }}
+          body: ${{ env.body }}
           files:  |
             /home/runner/work/i3-workspace-names-daemon/*.deb
             /home/runner/work/i3-workspace-names-daemon/*.md5

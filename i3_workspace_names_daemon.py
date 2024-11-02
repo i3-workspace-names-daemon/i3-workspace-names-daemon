@@ -148,9 +148,11 @@ def build_rename(i3, mappings, fixed_ws, args):
         if ignore_unknown:
             return None
 
-        window_class = name
         no_match_fallback = "_no_match" in mappings and mappings["_no_match"] in fa_icons
-        if window_class:
+        if (
+            (name := getattr(leaf, 'window_class', False))
+            or (name := getattr(leaf, 'app_id', False))
+        ):
             # window class exists, no match was found
             if no_match_fallback:
                 return fa_icons[mappings["_no_match"]] + (

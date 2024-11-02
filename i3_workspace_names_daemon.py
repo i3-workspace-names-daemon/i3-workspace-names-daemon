@@ -277,16 +277,16 @@ def _verbose_startup(i3):
     for w in i3.get_tree().workspaces():
         print('WORKSPACE: "{}"'.format(w.name))
         for i, l in enumerate(w.leaves()):
-            print(
-                """===> leave: {}
--> name: {}
--> window_title: {}
--> window_instance: {}
--> window_class: {}
--> app_id: {}""".format(
-                    i, l.name, l.window_title, l.window_instance, l.window_class, l.app_id
-                )
-            )
+            print('===> leave: {}'.format(i))
+            for attr in (
+                'name',
+                'window_title',
+                'window_instance',
+                'window_class',
+                'app_id',
+            ):
+                if (value := getattr(l, attr, None)):
+                    print('-> {}: {}'.format(attr, value))
 
 
 def _is_valid_re(regex):

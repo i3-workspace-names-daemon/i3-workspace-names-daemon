@@ -2,6 +2,7 @@ Release 0.15.2
 
 - improve automated Debian packaging
 - Debian Install Instructions for Readme
+- Add Wayland/Sway support
 
 Release 0.15.1
 

@@ -134,7 +134,7 @@ class TestRename(unittest.TestCase):
         mappings = base_mappings()
         args = AttrDict(base_config())
 
-        mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "")))
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "", "")))
 
         rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
@@ -176,7 +176,7 @@ class TestRename(unittest.TestCase):
         mappings["_no_match"] = "question"
         args = AttrDict(base_config())
 
-        mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "")))
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "", "")))
 
         rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)
@@ -218,7 +218,7 @@ class TestRename(unittest.TestCase):
         args = AttrDict(base_config())
         args.ignore_unknown = True
 
-        mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "")))
+        mi3 = MockI3(MockWorkspace(1, MockLeaf("giregox", "", "", "", "")))
 
         rename = build_rename(mi3, mappings, {}, args)
         rename(mi3, None)

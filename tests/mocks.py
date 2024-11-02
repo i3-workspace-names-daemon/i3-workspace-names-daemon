@@ -5,7 +5,7 @@ class AttrDict(dict):
 
 
 class MockLeaf:
-    def __init__(self, name, title=None, instance=None, wc=None):
+    def __init__(self, name, title=None, instance=None, wc=None, ai=None):
         self.name = name
         if title is not None:
             self.window_title = title
@@ -19,6 +19,10 @@ class MockLeaf:
             self.window_class = wc
         else:
             self.window_class = name
+        if ai is not None:
+            self.app_id = ai
+        else:
+            self.app_id = name
 
 
 class MockWorkspace:

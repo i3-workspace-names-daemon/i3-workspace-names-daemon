@@ -7,7 +7,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='i3-workspace-names-daemon',
-    version='0.15.1',
+    version='0.15.2',
     description='Dynamically update the name of each i3wm workspace using font-awesome icons or the names of applications running in each workspace.',
     long_description=long_description,
     long_description_content_type='text/markdown',

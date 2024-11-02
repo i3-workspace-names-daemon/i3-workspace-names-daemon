@@ -18,6 +18,7 @@ I3_CONFIG_PATHS = tuple(
         "~/.config/i3-regolith",
         "~/.config/regolith2/i3",
         "~/.config/regolith3/i3",
+        "~/.config/regolith3/sway",
     )
 )
 
@@ -135,7 +136,7 @@ def build_rename(i3, mappings, fixed_ws, args):
 
     def get_app_label(leaf, length):
         # interate through all identifiers, stop when first match is found
-        for identifier in ("name", "window_title", "window_instance", "window_class"):
+        for identifier in ("name", "window_title", "window_instance", "window_class", "app_id"):
             name = getattr(leaf, identifier, None)
             if name is None:
                 continue
@@ -147,9 +148,11 @@ def build_rename(i3, mappings, fixed_ws, args):
         if ignore_unknown:
             return None
 
-        window_class = name
         no_match_fallback = "_no_match" in mappings and mappings["_no_match"] in fa_icons
-        if window_class:
+        if (
+            (name := getattr(leaf, 'window_class', False))
+            or (name := getattr(leaf, 'app_id', False))
+        ):
             # window class exists, no match was found
             if no_match_fallback:
                 return fa_icons[mappings["_no_match"]] + (
@@ -276,15 +279,16 @@ def _verbose_startup(i3):
     for w in i3.get_tree().workspaces():
         print('WORKSPACE: "{}"'.format(w.name))
         for i, l in enumerate(w.leaves()):
-            print(
-                """===> leave: {}
--> name: {}
--> window_title: {}
--> window_instance: {}
--> window_class: {}""".format(
-                    i, l.name, l.window_title, l.window_instance, l.window_class
-                )
-            )
+            print('===> leave: {}'.format(i))
+            for attr in (
+                'name',
+                'window_title',
+                'window_instance',
+                'window_class',
+                'app_id',
+            ):
+                if (value := getattr(l, attr, None)):
+                    print('-> {}: {}'.format(attr, value))
 
 
 def _is_valid_re(regex):

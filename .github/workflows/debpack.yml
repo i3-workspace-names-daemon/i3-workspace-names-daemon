@@ -25,6 +25,9 @@ jobs:
       - name: Build Debian Package
         run: debuild --no-tgz-check -us -uc
 
+      # This is moved to reflect the DIY/minimalist aims of the project
+      # Remember to avoid leaking the token in the logs
+      # what I mean is: don't enable verbose on curl
       - name: Generate MD5 and Release the Package
         run: bash .github/release.sh
         if: "github.repository == 'i3-workspace-names-daemon/i3-workspace-names-daemon'"

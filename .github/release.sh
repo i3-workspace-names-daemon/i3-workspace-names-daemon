@@ -2,9 +2,11 @@
 I3WND=i3-workspace-names-daemon
 cd /home/runner/work/$I3WND
 
+# Generate MD5 Checksum file
 newest_deb=$(ls -t *.deb | head -n 1)
 md5sum "$newest_deb" > "${newest_deb}.md5"
 
+# Check version in setup.py matches the git tag
 PV=`grep -e 'version' "$I3WND/setup.py" | cut -d "'" -f 2`
     if [ "v$PV" != $GITHUB_REF_NAME ] ; then
     echo "Version mismatch 'v$PV' != '$GITHUB_REF_NAME'";
@@ -25,6 +27,7 @@ RELEASE_ID=`curl -L \
 echo "Created Release with ID $RELEASE_ID"
 
 if [[ -z $RELEASE_ID || ${#RELEASE_ID} -gt 18 ]] ; then
+                        # len() > 18
     echo "sorry, it didn't work..."
     exit 2
 fi

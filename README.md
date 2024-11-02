@@ -37,9 +37,29 @@ emerge --ask x11-misc/i3-workspace-names-daemon
 
 #### Debian & others
 
-- Packaging contibutions are welcome
+You can download the latest Debian package (`.deb`) file and its MD5 checksum from
+the [Releases](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/releases) section.
 
-Otherwise, install manually
+1. **Download the Package and Checksum**  
+   Go to the [Releases page](https://github.com/i3-workspace-names-daemon/i3-workspace-names-daemon/releases) and
+   download both:
+    - The `.deb` file for the package
+    - The corresponding `.md5` checksum file
+
+
+2. **Verify the Download (optional but recommended)**  
+   To verify the integrity of the downloaded `.deb` file, compare its MD5 checksum with the provided checksum:
+    ```bash
+    md5sum -c i3-workspace-names-daemon_0.15.2_amd64.deb.md5
+    ```
+   If the checksum matches, you’ll see an `OK` message, confirming the file is intact.
+
+
+3. **Install the Package**  
+    Once verified, you can install the package using `apt-get`:
+    ```bash
+   sudo apt-get install ./i3-workspace-names-daemon_0.15.2_amd64.deb
+    ```
 
 #### pip
 

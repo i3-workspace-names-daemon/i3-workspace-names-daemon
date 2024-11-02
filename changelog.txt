@@ -1,6 +1,7 @@
-Release 0.15.1-testing
+Release 0.15.2
 
 - improve automated debian packaging
+- Debian Install Instructions for Readme
 
 Release 0.15.1
 

@@ -1,11 +1,17 @@
+i3-workspace-names-daemon (0.15.2) UNRELEASED; urgency=low
+
+  * Improve debian packaging (Closes: #0024)
+
+ -- FloydOtsoko <floydotsoko@gmx.net>  Sat, 02 Nov 2024 01:24:40 +0100
+
 i3-workspace-names-daemon (0.15.1) UNRELEASED; urgency=low
 
   * Integrate debian packaging
 
  -- Castix <castix@autistici.org>  Tue, 01 Oct 2024 21:56:07 +0200
 
-i3-workspace-names-daemon (0.15.0-1) UNRELEASED; urgency=medium
+i3-workspace-names-daemon (0.15.0-1) UNRELEASED; urgency=low
 
-  * Initial release (Closes: #0006)  <nnnn is the bug number of your ITP>
+  * Initial release (Closes: #0006)
 
- -- Otsoko <55394045+FloydOtsoko@users.noreply.github.com>  Sun, 22 Oct 2023 10:55:26 +0200
+ -- FloydOtsoko <floydotsoko@gmx.net>  Sun, 22 Oct 2023 10:55:26 +0200

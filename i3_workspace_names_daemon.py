@@ -6,8 +6,48 @@ import os.path
 import argparse
 import re
 import i3ipc
+import markupsafe
 from sys import stderr, argv
 from fa_icons import icons as fa_icons
+
+
+# markup_re = re.compile(r'([^<]*)(<[^>]*>)([^<>]*)(</[^>]*>)([^<]*)')
+markup_re = re.compile(
+    r'(?P<before>[^<]*)'
+    r'(?P<open><[^>]*>)'
+    r'(?P<content>[^<>]*)'
+    r'(?P<close></[^>]*>)'
+    r'(?P<after>[^<]*)'
+)
+attrs_re = re.compile(
+    r'<(?P<tag>\S*)'
+    + ''.join(r'\s?(?P<attr%s>\S*)' % n for n in range(10))
+    + '>'
+)
+# https://eccentric.one/misc/pygtk/pygtk2reference/pango-markup-language.html
+PANGO_ATTRS = {
+    # 'font_desc': A font description string, such as "Sans Italic 12"; note that any other span attributes will override this description. So if you have "Sans Italic" and also a style="normal" attribute, you will get Sans normal, not italic.
+    'font_family': ["normal", "sans", "serif", "monospace"],
+    'face': ["normal", "sans", "serif", "monospace"],
+    'size': ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large', 'smaller', 'larger'],
+    'style': ['normal', 'oblique', 'italic'],
+    'weight': ['ultralight', 'light', 'normal', 'bold', 'ultrabold', 'heavy'],  # or a numeric weight.
+    'variant': ['normal', 'smallcaps'],
+    'stretch': [
+        'ultracondensed', 'extracondensed', 'condensed', 'semicondensed',
+        'normal', 'semiexpanded', 'expanded', 'extraexpanded', 'ultraexpanded'
+    ],
+    # 'foreground': 	An RGB color specification such as '#00FF00' or a color name such as 'red'.
+    # background	An RGB color specification such as '#00FF00' or a color name such as 'red'.
+    'underline': ['single', 'double', 'low', 'none'],
+    # 'rise':
+    'strikethrough': ['true'],  # removing false
+    'fallback': ['disabled']  # you should pick the appropriate font
+    # 'lang':	A language code, indicating the text language.
+}
+PANGO_TAGS = ['span', 'b', 'big', 'i', 's', 'sub', 'sup', 'small', 'tt', 'u']
+
+KNOWN_FONTS = ['file-icons', ]
 
 
 I3_CONFIG_PATHS = tuple(
@@ -33,6 +73,56 @@ DEFAULT_APP_ICON_CONFIG = {
     "vlc": "play",
     "signal": "comment",
 }
+
+
+def pango_markup(text):
+    sanitized = ''
+    for i, _match in enumerate(markup_re.finditer(text)):
+        if i == 0 and _match.start() != 0:
+            # beware nesting is unsupported by our side
+            # I didn't read pango implementation
+            return fa_icons['skull'] + '1'
+        groups = _match.groupdict()
+        for thumb in ('before', 'content', 'after'):
+            if len(groups[thumb]) > 18:  # rule of thumb
+                return fa_icons['skull'] + '2'
+        opening = groups['open']
+        if not opening:
+            return fa_icons['gear']
+        if not (omatch := attrs_re.match(opening)):
+            return fa_icons['gear']
+        opened = omatch.groups()
+        sanitized += str(markupsafe.escape(groups['before']))
+        tag = '<' + (tag_name := opened[0])
+        opened = opened[1:]
+        if not tag_name:
+            return fa_icons['gear']
+        if tag_name not in PANGO_TAGS:
+            return fa_icons['gear']
+        if len(tag_name) > 5:  # max(len(t) for t in PANGO_TAGS):
+            return fa_icons['skull'] + '3'
+        attrs = {
+            p[0]: p[1].replace('"', '').replace('\\', '')
+            for p in (attr.split('=') for attr in opened if attr.count('=') == 1)
+        }
+        for name, value in attrs.items():
+            if name == 'font_desc':
+                if value not in KNOWN_FONTS:
+                    return fa_icons['gear']
+                else:
+                    tag += f' {name}="{value}"'
+            else:
+                if name not in PANGO_ATTRS:
+                    return fa_icons['gears']
+                if value not in PANGO_ATTRS[name]:
+                    return fa_icons['gears']
+                else:
+                    tag += f' {name}="{value}"'
+        sanitized += tag + '>'
+        sanitized += str(markupsafe.escape(groups['content']))
+        sanitized += f'</{tag_name}>'
+        sanitized += str(markupsafe.escape(groups['after']))
+    return sanitized
 
 
 def truncate(text, length, ellipsis="…"):
@@ -79,11 +169,10 @@ def build_rename(i3, mappings, fixed_ws, args):
     verbose = args.verbose
 
     def get_icon(icon_name):
-        # is pango markup?
-        if icon_name.startswith("<"):
-            return icon_name
         if icon_name in fa_icons:
             return fa_icons[icon_name]
+        if markup := pango_markup(icon_name):
+            return markup
         return None
 
     def transform_title(target_mapping, window_title):
@@ -190,6 +279,8 @@ def build_rename(i3, mappings, fixed_ws, args):
                     names = [x for x in names if x not in seen and not seen.add(x)]
                 # filter empty names
                 names = [x for x in names if x]
+                # at most N non unique names
+                names = names[:args.max_leaves_in_a_workspace]
                 names = delim.join(names)
                 if int(workspace.num) >= 0:
                     if names:
@@ -418,6 +509,14 @@ def main() -> int:
         help="Truncate title to specified length.",
         required=False,
         default=12,
+        type=int,
+    )
+    parser.add_argument(
+        '-m',
+        '--max-leaves-in-a-workspace',
+        help="Only the first -m N leaves are considered while building a workspace name.",
+        required=False,
+        default=4,
         type=int,
     )
     parser.add_argument(

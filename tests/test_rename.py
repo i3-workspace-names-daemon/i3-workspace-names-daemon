@@ -9,6 +9,7 @@ def base_config():
         "delimiter": "|",
         "number_separator_format": "{}: {}",
         "max_title_length": 12,
+        "max_leaves_in_a_workspace": 4,
         "uniq": False,
         "ignore_unknown": False,
         "no_match_not_show_name": False,

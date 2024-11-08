@@ -48,8 +48,8 @@ class MockI3:
     def get_tree(self):
         return MockTree(self)
 
-    def get_workspaces(self):
-        return self.workspaces
+    # def get_workspaces(self):
+    #     return self.workspaces
 
     def command(self, cmd):
         self.cmd = cmd

@@ -375,8 +375,7 @@ def generate_icons(icons_json_path: str):  # pragma: no cover
         _file.write("# font-awesome icon-name to unicode mapping\n\n")
         _file.write("icons = {\n")
         for name, prop in data.items():
-            if prop["free"]:
-                _file.write(f'    "{name}": u"\\u{prop["unicode"].zfill(4)}",\n')
+            _file.write(f'    "{name}": u"\\u{prop["unicode"].zfill(4)}",\n')
         _file.write('}\n')
 
 
